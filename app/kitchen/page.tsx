@@ -1,28 +1,13 @@
 'use client'
-import {useEffect,useState} from 'react'
+import { useEffect, useState } from 'react'
 export default function Kitchen(){
-  const [orders,setOrders]=useState<any[]>([])
-  const load=async()=>{
-    const r=await fetch('/api/orders'); const d=await r.json(); setOrders(d)
-  }
-  useEffect(()=>{load(); const id=setInterval(load,3000); return()=>clearInterval(id)},[])
-  const complete=async(id:number)=>{
-    await fetch(`/api/orders/${id}`,{method:'PATCH',body:JSON.stringify({status:'completed'})})
-    load()
-  }
-  return(
-    <div style={{padding:24,fontFamily:'system-ui'}}>
-      <h1>👨‍🍳 Kitchen Dashboard</h1>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))',gap:16,marginTop:20}}>
-        {orders.filter(o=>o.status!=='completed').map(o=>(
-          <div key={o.id} style={{background:'white',border:'1px solid #eee',borderRadius:16,padding:16}}>
-            <b>Order #{o.id}</b> - ৳{o.total} <br/>
-            <div style={{margin:'10px 0',fontSize:13}}>{o.items?.map((i:any)=>i.name+' x'+i.qty).join(', ')}</div>
-            <button onClick={()=>complete(o.id)} style={{background:'#16a34a',color:'white',border:'none',padding:'10px 16px',borderRadius:10,width:'100%',fontWeight:700}}>✅ Complete</button>
-          </div>
-        ))}
-      </div>
-      {orders.length===0 && <p>No pending orders</p>}
-    </div>
+  const [orders, setOrders] = useState<any[]>([])
+  const load = () => fetch('/api/orders').then(r=>r.json()).then(setOrders)
+  useEffect(()=>{ load(); const i=setInterval(load,3000); return()=>clearInterval(i) },[])
+  const update = async(id:string, status:string)=>{ await fetch(`/api/orders/${id}`, { method: 'PATCH', body: JSON.stringify({ status }), headers: { 'Content-Type': 'application/json' } }); load() }
+  return (
+    <div className="min-h-screen bg-orange-50 p-6"><h1 className="text-3xl font-bold mb-6">👨‍🍳 Kitchen Orders</h1><div className="grid md:grid-cols-3 gap-4">{orders.filter(o=>o.status!=='COMPLETED').map(o=>(
+      <div key={o.id} className="bg-white p-4 rounded-2xl shadow border-l-4 border-orange-500"><div className="flex justify-between"><span className="font-bold">{o.token}</span><span className="text-xs px-2 py-1 bg-yellow-100 rounded">{o.status}</span></div><div className="mt-2 text-sm">{o.items.map((it:any)=><div key={it.id} className="flex justify-between"><span>{it.food.name} x{it.quantity}</span><span>৳{it.price*it.quantity}</span></div>)}</div><p className="font-bold mt-2">Total: ৳{o.total}</p><div className="flex gap-2 mt-3">{o.status==='PENDING'&&<button onClick={()=>update(o.id,'PREPARING')} className="flex-1 py-2 bg-blue-600 text-white rounded">Start Cooking</button>}{o.status==='PREPARING'&&<button onClick={()=>update(o.id,'READY')} className="flex-1 py-2 bg-green-600 text-white rounded">Ready</button>}{o.status==='READY'&&<button onClick={()=>update(o.id,'COMPLETED')} className="flex-1 py-2 bg-black text-white rounded">Complete ✅</button>}</div></div>
+    ))}</div></div>
   )
 }

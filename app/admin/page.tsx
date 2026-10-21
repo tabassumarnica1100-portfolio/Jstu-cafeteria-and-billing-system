@@ -1,25 +1,14 @@
 'use client'
-import {useEffect,useState} from 'react'
+import { useEffect, useState } from 'react'
 export default function Admin(){
-  const [orders,setOrders]=useState<any[]>([])
-  useEffect(()=>{fetch('/api/orders').then(r=>r.json()).then(setOrders)},[])
-  const total = orders.reduce((s,o)=>s+o.total,0)
-  const completed = orders.filter(o=>o.status==='completed').length
-  return(
-    <div style={{padding:24,fontFamily:'system-ui',background:'#f8fafc',minHeight:'100vh'}}>
-      <h1>📊 Admin Billing</h1>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16,marginTop:20}}>
-        <div style={{background:'white',padding:20,borderRadius:16}}><div>Total Revenue</div><h2>৳{total}</h2></div>
-        <div style={{background:'white',padding:20,borderRadius:16}}><div>Total Orders</div><h2>{orders.length}</h2></div>
-        <div style={{background:'white',padding:20,borderRadius:16}}><div>Completed</div><h2>{completed}</h2></div>
-      </div>
-      <div style={{background:'white',marginTop:20,borderRadius:16,padding:16}}>
-        <h3>Recent Orders</h3>
-        <table style={{width:'100%',borderCollapse:'collapse'}}>
-          <tr style={{textAlign:'left',borderBottom:'1px solid #eee'}}><th>ID</th><th>Total</th><th>Status</th><th>Time</th></tr>
-          {orders.map(o=><tr key={o.id} style={{borderBottom:'1px solid #f1f1f1'}}><td>#{o.id}</td><td>৳{o.total}</td><td>{o.status}</td><td>{new Date(o.createdAt).toLocaleTimeString()}</td></tr>)}
-        </table>
-      </div>
+  const [orders, setOrders] = useState<any[]>([])
+  useEffect(()=>{ fetch('/api/orders').then(r=>r.json()).then(setOrders) },[])
+  const totalSales = orders.filter(o=>o.status==='COMPLETED').reduce((s,o)=>s+o.total,0)
+  const todaySales = orders.filter(o=>{ const d=new Date(o.createdAt).toDateString(); return d===new Date().toDateString() && o.status==='COMPLETED' }).reduce((s,o)=>s+o.total,0)
+  return (
+    <div className="min-h-screen bg-gray-100 p-6"><h1 className="text-3xl font-bold mb-6">📊 Admin Billing</h1>
+      <div className="grid md:grid-cols-3 gap-4 mb-6"><div className="bg-white p-6 rounded-2xl shadow"><p className="text-gray-500 text-sm">Total Sales</p><p className="text-2xl font-bold">৳{totalSales}</p></div><div className="bg-white p-6 rounded-2xl shadow"><p className="text-gray-500 text-sm">Today Sales</p><p className="text-2xl font-bold">৳{todaySales}</p></div><div className="bg-white p-6 rounded-2xl shadow"><p className="text-gray-500 text-sm">Total Orders</p><p className="text-2xl font-bold">{orders.length}</p></div></div>
+      <div className="bg-white rounded-2xl shadow overflow-hidden"><table className="w-full text-sm"><thead className="bg-black text-white"><tr><th className="p-3 text-left">Token</th><th className="p-3">Items</th><th className="p-3">Total</th><th className="p-3">Status</th><th className="p-3">Time</th></tr></thead><tbody>{orders.map(o=><tr key={o.id} className="border-t"><td className="p-3 font-mono">{o.token}</td><td className="p-3">{o.items.map((i:any)=>i.food.name).join(', ')}</td><td className="p-3 font-bold">৳{o.total}</td><td className="p-3"><span className={`px-2 py-1 rounded text-xs ${o.status==='COMPLETED'?'bg-green-100':'bg-yellow-100'}`}>{o.status}</span></td><td className="p-3">{new Date(o.createdAt).toLocaleString()}</td></tr>)}</tbody></table></div>
     </div>
   )
 }
