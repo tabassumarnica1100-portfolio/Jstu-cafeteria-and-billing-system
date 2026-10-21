@@ -19,3 +19,13 @@ graph TD
 ### Real Wallet Logic
 - User wallet check & deduct in atomic DB transaction
 - Prevents negative balance
+
+---
+
+### Developed and Designed By
+**Arnica Tabassum**
+Department of CSE
+Jamalpur Science and Technology University
+
+**GitHub:** [tabassumarnica1100-portfolio](https://github.com/tabassumarnica1100-portfolio)
+**Project Link:** [JSTU Cafeteria and Billing System](https://github.com/tabassumarnica1100-portfolio/Jstu-cafeteria-and-billing-system)
