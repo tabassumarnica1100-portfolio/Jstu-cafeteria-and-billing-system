@@ -8,6 +8,7 @@ graph TD
     A[Frontend: Next.js 14 App Router] --> B[API Layer: /api/menu, /api/wallet, /api/orders]
     B --> C[Prisma ORM]
     C --> D[Neon PostgreSQL - Production DB]
+    C --> D[Neon PostgreSQL - Production DB]
     model User { id String @id @default(cuid()), wallet Int @default(1000), orders Order[] }
 model Menu { id Int @id @default(autoincrement()), name String, price Int, category String, image String }
 model Order { id String @id @default(cuid()), total Int, items Json, userId String, status String }
