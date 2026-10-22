@@ -44,4 +44,4 @@ This system ensures faster service, accurate billing, and transparent order trac
 
 1. Clone the repo
 ```bash
-git clone https://github.com/ArnicaTabassum/Jstu-cafeteria-and-billing-system.git
+git clone https://github.com/tabassumarnica1100-portfolio/Jstu-cafeteria-and-billing-system.git
