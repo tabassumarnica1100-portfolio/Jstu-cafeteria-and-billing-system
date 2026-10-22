@@ -1,34 +1,47 @@
-# JSTU Cafeteria and Billing System
+# JSTU DINE - Smart Cafeteria Management System 🍽️
 
-A full-stack cafeteria management system for JSTU.
+> A full-stack smart cafeteria operating system for Jamalpur Science and Technology University (JSTU)
 
-### System Architecture
-```mermaid
-graph TD
-    A[Frontend: Next.js 14 App Router] --> B[API Layer]
-    B --> C[Prisma ORM]
-    C --> D[Neon PostgreSQL]
-```
-
-### Tech Stack
-- **Frontend:** Next.js 14, TypeScript, Tailwind CSS
-- **Backend:** Next.js API Routes
-- **Database:** Neon PostgreSQL + Prisma ORM
-- **Deployment:** Vercel
-
-### Real Wallet Logic
-- User wallet check & deduct in atomic DB transaction
-- Prevents negative balance
+**Live Website:** [https://jstucafeteria.vercel.app](https://jstucafeteria.vercel.app)  
+**Status:** ✅ Deployed & Live on Vercel
 
 ---
 
-### Developed and Designed By
-**Arnica Tabassum**
+### 📖 About The Project
 
-Department of CSE
+JSTU DINE is a digital transformation project designed to modernize the university cafeteria. It replaces the manual billing and token system with a real-time, role-based web application for Students, Kitchen Staff, and Admins.
 
-Jamalpur Science and Technology University
+This system ensures faster service, accurate billing, and transparent order tracking.
 
-**GitHub:** [tabassumarnica1100-portfolio](https://github.com/tabassumarnica1100-portfolio)
+### ✨ Key Features
 
-**Project Link:** [JSTU Cafeteria and Billing System](https://github.com/tabassumarnica1100-portfolio/Jstu-cafeteria-and-billing-system)
+#### 👨‍🎓 Student Module
+- Live menu with availability status
+- Add to cart & instant checkout
+- Real-time order status tracking (Pending → Preparing → Ready)
+
+#### 🍳 Kitchen Panel `/kitchen`
+- Real-time order dashboard
+- One-click status updates
+- Designed for fast kitchen operations
+
+#### 💰 Admin & Billing Panel `/admin`
+- Complete order management
+- **Total Revenue Tracking**
+- Recent orders timeline with analytics
+- Menu and user control
+
+### 🛠️ Built With
+
+- **Next.js 14** - React Framework with App Router
+- **TypeScript** - For type-safe code
+- **Prisma ORM** - Database management
+- **PostgreSQL** - Production database (Neon / Vercel Postgres)
+- **Tailwind CSS** - Modern UI design
+- **Vercel** - Deployment & Hosting
+
+### 🚀 Getting Started Locally
+
+1. Clone the repo
+```bash
+git clone https://github.com/ArnicaTabassum/Jstu-cafeteria-and-billing-system.git
